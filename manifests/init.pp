@@ -49,7 +49,7 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
     require => [Apt::Source['repo.powerdns.com']];
   }
 
-  concat { "/etc/dnsdist/dnsdist.conf":
+  concat { '/etc/dnsdist/dnsdist.conf':
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -57,20 +57,20 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
     require => [Package['dnsdist']]
   }
 
-  concat::fragment { "global-header":
-    target  => "/etc/dnsdist/dnsdist.conf",
+  concat::fragment { 'global-header':
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => template('dnsdist/dnsdist.conf-header.erb'),
     order   => '10';
   }
 
-  concat::fragment { "acl-header":
-    target  => "/etc/dnsdist/dnsdist.conf",
+  concat::fragment { 'acl-header':
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => 'setACL({',
     order   => '40';
   }
 
-  concat::fragment { "acl-footer":
-    target  => "/etc/dnsdist/dnsdist.conf",
+  concat::fragment { 'acl-footer':
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => "})\n",
     order   => '49';
   }
