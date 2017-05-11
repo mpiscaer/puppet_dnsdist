@@ -39,9 +39,8 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
   apt::source { 'repo.powerdns.com':
     location    => 'http://repo.powerdns.com/ubuntu',
     repos       => 'main',
-    release     => 'trusty-dnsdist-10',
+    release     => 'xenial-dnsdist-11',
     include_src => false,
-    amd64_only  => true,
     require     => [Apt::Pin['dnsdist'], Apt::Key['powerdns']];
   }
 
