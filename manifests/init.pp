@@ -51,7 +51,11 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
 
   $config_file = "/etc/dnsdist/dnsdist.conf"
 
-  concat { $config_file:
+  file { 'config' :
+    path => $config_file,
+  }
+
+  concat { 'config':
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
