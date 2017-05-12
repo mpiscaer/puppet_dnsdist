@@ -56,6 +56,7 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
   }
 
   concat { 'config':
+    path => $config_file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
