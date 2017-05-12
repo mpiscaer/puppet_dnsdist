@@ -53,8 +53,8 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-  #  notify  => Service['dnsdist'],
-  #  require => [Package['dnsdist']]
+    notify  => Service['dnsdist'],
+    require => [Package['dnsdist']]
   }
 
   concat::fragment { 'global-header':
@@ -80,6 +80,6 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => [Concat[$config_file]]
+    require    => [Concat['/etc/dnsdist/dnsdist.conf']]
   }
 }
