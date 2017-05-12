@@ -53,10 +53,10 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
 
   file { 'config' :
     path => $config_file,
+    content => template('dnsdist.conf.erb')
   }
 
-  concat { 'config':
-    path => $config_file,
+  concat { $config_file :
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
