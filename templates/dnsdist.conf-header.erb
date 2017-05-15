@@ -3,3 +3,10 @@ controlSocket("<%= @control_socket %>")
 <% @listen_addresess.each do |listen_addres| 
   -%>addLocal("<%= listen_addres %>")
 <% end -%>
+<% if @cache_enabled %>
+	pc = newPacketCache(<%= @cache_size %>, 86400, 0, 60, 60)
+	getPool(""):setCache(pc)
+<% end %>
+<% if @metrics_enabled %>
+	carbonServer("<%= @metrics_host %>")
+<% end %>

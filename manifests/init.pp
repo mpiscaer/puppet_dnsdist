@@ -25,7 +25,17 @@
 #    listen_addresess => [ '192.168.1.1' ];
 #  }
 #
-class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_socket = '127.0.0.1', $listen_addresess = '0.0.0.0') {
+class dnsdist (
+  $webserver = '0.0.0.0:80', 
+  $webserver_pass = 'geheim', 
+  $control_socket = '127.0.0.1', 
+  $listen_addresess = '0.0.0.0',
+  $cache_enabled = false,
+  $cache_size = 10000,
+  $metrics_enabled = false,
+  $metrics_host = '127.0.0.1'
+  ) 
+{
   apt::pin { 'dnsdist':
     origin   => 'repo.powerdns.com',
     priority => '600'
