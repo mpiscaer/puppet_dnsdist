@@ -4,9 +4,9 @@ controlSocket("<%= @control_socket %>")
   -%>addLocal("<%= listen_addres %>")
 <% end -%>
 <% if @cache_enabled %>
-	pc = newPacketCache(<%= @cache_size %>, 86400, 0, 60, 60)
-	getPool(""):setCache(pc)
-<% end %>
+pc = newPacketCache(<%= @cache_size %>, 86400, 0, 60, 60)
+getPool(""):setCache(pc)
+<% end -%>
 <% if @metrics_enabled %>
-	carbonServer("<%= @metrics_host %>")
-<% end %>
+carbonServer("<%= @metrics_host %>")
+<% end -%>
