@@ -1,6 +1,6 @@
 addPoolRule({<%
-  rules.each do |rule| 
+  @rules.each do |rule| 
   -%>"<%=
-    rule %>", <%
+    @rule %>", <%
   end 
--%>}, "<%= pool %>")
+-%>}, "<%= @pool %>")

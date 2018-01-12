@@ -25,7 +25,17 @@
 #    listen_addresess => [ '192.168.1.1' ];
 #  }
 #
-class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_socket = '127.0.0.1', $listen_addresess = '0.0.0.0') {
+class dnsdist (
+  $webserver = '0.0.0.0:80', 
+  $webserver_pass = 'geheim', 
+  $control_socket = '127.0.0.1', 
+  $listen_addresess = '0.0.0.0',
+  $cache_enabled = false,
+  $cache_size = 10000,
+  $metrics_enabled = false,
+  $metrics_host = '127.0.0.1'
+  ) 
+{
   apt::pin { 'dnsdist':
     origin   => 'repo.powerdns.com',
     priority => '600'
@@ -39,9 +49,8 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
   apt::source { 'repo.powerdns.com':
     location    => 'http://repo.powerdns.com/ubuntu',
     repos       => 'main',
-    release     => 'trusty-dnsdist-10',
+    release     => 'xenial-dnsdist-11',
     include_src => false,
-    amd64_only  => true,
     require     => [Apt::Pin['dnsdist'], Apt::Key['powerdns']];
   }
 
@@ -50,7 +59,7 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
     require => [Apt::Source['repo.powerdns.com']];
   }
 
-  concat { "/etc/dnsdist/dnsdist.conf":
+  concat { '/etc/dnsdist/dnsdist.conf' :
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -58,20 +67,20 @@ class dnsdist ($webserver = '0.0.0.0:80', $webserver_pass = 'geheim', $control_s
     require => [Package['dnsdist']]
   }
 
-  concat::fragment { "global-header":
-    target  => "/etc/dnsdist/dnsdist.conf",
+  concat::fragment { 'global-header':
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => template('dnsdist/dnsdist.conf-header.erb'),
     order   => '10';
   }
 
-  concat::fragment { "acl-header":
-    target  => "/etc/dnsdist/dnsdist.conf",
+  concat::fragment { 'acl-header':
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => 'setACL({',
     order   => '40';
   }
 
-  concat::fragment { "acl-footer":
-    target  => "/etc/dnsdist/dnsdist.conf",
+  concat::fragment { 'acl-footer':
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => "})\n",
     order   => '49';
   }
