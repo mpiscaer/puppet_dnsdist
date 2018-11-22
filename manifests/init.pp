@@ -26,15 +26,16 @@
 #  }
 #
 class dnsdist (
-  $webserver = '0.0.0.0:80', 
-  $webserver_pass = 'geheim', 
-  $control_socket = '127.0.0.1', 
-  $listen_addresess = '0.0.0.0',
-  $cache_enabled = false,
-  $cache_size = 10000,
-  $metrics_enabled = false,
-  $metrics_host = '127.0.0.1'
-  ) 
+  $version          = $dnsdist::params::version,
+  $webserver        = $dnsdist::params::webserver,
+  $webserver_pass   = $dnsdist::params::webserver_pass,
+  $control_socket   = $dnsdist::params::control_socket,
+  $listen_addresess = $dnsdist::params::listen_addresess,
+  $cache_enabled    = $dnsdist::params::cache_enabled,
+  $cache_size       = $dnsdist::params::cache_size,
+  $metrics_enabled  = $dnsdist::params::metrics_enabled,
+  $metrics_host     = $dnsdist::params::metrics_host,
+  ) inherits dnsdist::params
 {
   apt::pin { 'dnsdist':
     origin   => 'repo.powerdns.com',
