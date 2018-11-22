@@ -64,7 +64,7 @@ class dnsdist (
     group   => 'root',
     mode    => '0644',
     notify  => Service['dnsdist'],
-    require => [Package['dnsdist']]
+    require => [Package['dnsdist']],
   }
 
   concat::fragment { 'global-header':
@@ -90,6 +90,6 @@ class dnsdist (
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => [Concat['/etc/dnsdist/dnsdist.conf']]
+    require    => [Concat['/etc/dnsdist/dnsdist.conf']],
   }
 }
