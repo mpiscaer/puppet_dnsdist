@@ -22,10 +22,10 @@
 #       resolver_name = 'ns1';
 #   }
 #
-define dnsdist::newserver ($forward_adres = $title, $pool = '', $resolver_name  = '') {
+define dnsdist::newserver ($forward_adres = $title, $pool = undef, $resolver_name = undef) {
   concat::fragment { "newserver-${pool}-${forward_adres}":
-    target  => "/etc/dnsdist/dnsdist.conf",
+    target  => '/etc/dnsdist/dnsdist.conf',
     content => template('dnsdist/newServer.erb'),
-    order   => "20"
+    order   => '20',
   }
 }

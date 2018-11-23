@@ -26,32 +26,32 @@
 #  }
 #
 class dnsdist (
-  $webserver = '0.0.0.0:80', 
-  $webserver_pass = 'geheim', 
-  $control_socket = '127.0.0.1', 
-  $listen_addresess = '0.0.0.0',
-  $cache_enabled = false,
-  $cache_size = 10000,
-  $metrics_enabled = false,
-  $metrics_host = '127.0.0.1'
-  ) 
+  $version          = $dnsdist::params::version,
+  $webserver        = $dnsdist::params::webserver,
+  $webserver_pass   = $dnsdist::params::webserver_pass,
+  $control_socket   = $dnsdist::params::control_socket,
+  $listen_addresess = $dnsdist::params::listen_addresess,
+  $cache_enabled    = $dnsdist::params::cache_enabled,
+  $cache_size       = $dnsdist::params::cache_size,
+  $metrics_enabled  = $dnsdist::params::metrics_enabled,
+  $metrics_host     = $dnsdist::params::metrics_host,
+  ) inherits dnsdist::params
 {
   apt::pin { 'dnsdist':
     origin   => 'repo.powerdns.com',
-    priority => '600'
-  }
-
-  apt::key { 'powerdns':
-    key         => 'FD380FBB',
-    key_content => template('dnsdist/aptkey.erb'),
+    priority => '600',
   }
 
   apt::source { 'repo.powerdns.com':
-    location    => 'http://repo.powerdns.com/ubuntu',
-    repos       => 'main',
-    release     => 'xenial-dnsdist-11',
-    include_src => false,
-    require     => [Apt::Pin['dnsdist'], Apt::Key['powerdns']];
+    location      => 'http://repo.powerdns.com/ubuntu',
+    repos         => 'main',
+    release       => join([$::lsbdistcodename, '-dnsdist-', $version], ''),
+    architecture  => 'amd64',
+    key           => {
+      id     => '9FAAA5577E8FCF62093D036C1B0C6205FD380FBB',
+      server => 'keyserver.ubuntu.com',
+    },
+    require       => [Apt::Pin['dnsdist']];
   }
 
   package { 'dnsdist':
@@ -64,7 +64,7 @@ class dnsdist (
     group   => 'root',
     mode    => '0644',
     notify  => Service['dnsdist'],
-    require => [Package['dnsdist']]
+    require => [Package['dnsdist']],
   }
 
   concat::fragment { 'global-header':
@@ -90,6 +90,6 @@ class dnsdist (
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => [Concat['/etc/dnsdist/dnsdist.conf']]
+    require    => [Concat['/etc/dnsdist/dnsdist.conf']],
   }
 }
