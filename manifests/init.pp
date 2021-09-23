@@ -44,6 +44,12 @@ class dnsdist (
 {
 
   if ($use_upstream_package_source) {
+
+    apt::pin { 'dnsdist':
+      origin   => 'repo.powerdns.com',
+      priority => '600',
+    }
+
     apt::key { 'powerdns':
       ensure => present,
       id     => '9FAAA5577E8FCF62093D036C1B0C6205FD380FBB',
@@ -58,11 +64,6 @@ class dnsdist (
       release      => "${::lsbdistcodename}-dnsdist-${version}",
       architecture => 'amd64',
       require      => [Apt::Key['powerdns'], Apt::Pin['dnsdist']],
-    }
-
-    apt::pin { 'dnsdist':
-      origin   => 'repo.powerdns.com',
-      priority => '600',
     }
 
     Apt::Source['repo.powerdns.com'] ~> Class['apt::update'] -> Package['dnsdist']
