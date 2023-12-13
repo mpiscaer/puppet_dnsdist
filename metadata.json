@@ -2,15 +2,20 @@
   "name": "mpiscaer-dnsdist",
   "version": "0.1.0",
   "author": "Michiel Piscaer",
-  "license": "na",
   "summary": "dnsdist",
+  "license": "na",
   "source": "https://github.com/mpiscaer/puppet_dnsdist",
-
-  "dependencies": [
-    { "name": "puppetlabs/concat", "version_requirement": ">=1.2.0" },
-    { "name": "puppetlabs/apt", "version_requirement": ">=0.0.4" }
-  ],
   "project_page": "https://github.com/mpiscaer/puppet_dnsdist",
+  "dependencies": [
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">=1.2.0"
+    },
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">=0.0.4"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Ubuntu",
@@ -30,7 +35,16 @@
       ]
     }
   ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 7.24 < 9.0.0"
+    }
+  ],
   "Tag": [
     "dnsdist"
-  ]
+  ],
+  "pdk-version": "3.0.0",
+  "template-url": "pdk-default#3.0.0",
+  "template-ref": "tags/3.0.0-0-g056e50d"
 }
